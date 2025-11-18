@@ -1,6 +1,6 @@
 beautifulsoup4==4.12.2
 requests==2.31.0
-pillow==10.1.0
+pillow==9.5.0
 opencv-python==4.8.1.78
 numpy==1.26.2
 mss==9.0.1
