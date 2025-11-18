@@ -9,6 +9,10 @@ import easyocr
 import keyboard
 import tkinter as tk
 from threading import Thread
+import warnings
+
+# Suppress deprecation warnings from dependencies
+warnings.filterwarnings('ignore', category=DeprecationWarning)
 
 class TradeHelper:
     def __init__(self):
