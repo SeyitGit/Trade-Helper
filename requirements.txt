@@ -1,0 +1,8 @@
+beautifulsoup4==4.12.2
+requests==2.31.0
+pillow==10.1.0
+opencv-python==4.8.1.78
+numpy==1.26.2
+mss==9.0.1
+easyocr==1.7.0
+keyboard==0.13.5
