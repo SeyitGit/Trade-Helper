@@ -199,8 +199,8 @@ class TradeHelper:
         h = self.screen_height
         w = self.screen_width
         
-        your_region = (0, int(h*0.10), int(w*0.35), int(h*0.30))
-        their_region = (0, int(h*0.43), int(w*0.35), int(h*0.30))
+        your_region = (0, int(h*0.10), int(w*0.45), int(h*0.30))
+        their_region = (0, int(h*0.43), int(w*0.45), int(h*0.30))
         
         debug_with_regions = screen_bgr.copy()
         cv2.rectangle(debug_with_regions, 
@@ -372,10 +372,19 @@ class TradeHelper:
             img_rgb = cv2.cvtColor(panel_img, cv2.COLOR_BGR2RGB)
             img_pil = Image.fromarray(img_rgb)
             
+            # Create RGBA image for transparency
+            img_rgba = Image.new('RGBA', img_pil.size)
+            img_rgba.paste(img_pil)
+            
+            # Apply semi-transparency (0-255, lower = more transparent)
+            alpha = img_rgba.split()[3]
+            alpha = Image.eval(alpha, lambda a: 220)  # 220/255 = ~86% opacity
+            img_rgba.putalpha(alpha)
+            
             root = tk.Tk()
             root.overrideredirect(True)
             root.attributes('-topmost', True)
-            root.attributes('-transparentcolor', 'black')
+            root.attributes('-alpha', 0.9)  # Window transparency
             
             screen_width = root.winfo_screenwidth()
             screen_height = root.winfo_screenheight()
@@ -385,7 +394,7 @@ class TradeHelper:
             root.geometry(f'{panel_w}x{panel_h}+{x_pos}+{y_pos}')
             root.configure(bg='black')
             
-            photo = ImageTk.PhotoImage(img_pil)
+            photo = ImageTk.PhotoImage(img_rgba)
             
             label = tk.Label(root, image=photo, bg='black', borderwidth=0)
             label.image = photo 
